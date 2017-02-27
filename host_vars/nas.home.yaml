@@ -1,0 +1,32 @@
+---
+nas:
+  uid: 33
+  gid: 33
+app_basedir: /data/app
+downloads_dir: /data/downloads
+
+services:
+  couchpotato:
+    description: CouchPotato
+    rkt:
+      image:
+        name: docker://linuxserver/couchpotato
+        tag: latest
+
+      options:
+      - --net=host
+      - --dns=host
+      - --set-env PUID={{ nas.uid }}
+      - --set-env PGID={{ nas.gid }}
+      - --set-env TZ=Europe/Paris
+      
+      volumes:
+      - name: config
+        source: "{{ app_basedir }}/couchpotato"
+        target: /config
+      - name: downloads
+        source: "{{ downloads_dir }}"
+        target: /downloads
+      - name: movies
+        source: /data/storage/public/Videos/Movies
+        target: /movies

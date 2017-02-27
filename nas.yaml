@@ -1,0 +1,10 @@
+---
+- hosts: nas.home
+  remote_user: root
+  roles:
+  - role: rkt-service
+    vars:
+      name: couchpotato
+      description: "{{ services.couchpotato.description }}"
+      rkt: "{{ services.couchpotato.rkt }}"
+
