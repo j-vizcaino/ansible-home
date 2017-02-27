@@ -1,0 +1,26 @@
+{% set uuid_file = '/run/' + name + '.uuid' -%}
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+{% if description is defined -%}
+Description={{ description }}
+{% endif -%}
+
+[Service]
+ExecStart=/usr/bin/rkt run \
+  --uuid-file-save={{ uuid_file }} \
+  {% for opt in rkt.options -%}
+  {{ opt }} \
+  {% endfor -%}
+  {% for vol in rkt.volumes -%}
+  --volume {{ vol.name }},kind=host,source={{ vol.source }} \
+  --mount volume={{ vol.name }},target={{ vol.target }} \
+  {% endfor -%}
+  {{ rkt.image.name }}:{{ rkt.image.tag }}
+
+ExecStopPost=-/usr/bin/rkt rm --uuid-file={{ uuid_file }}
+ExecStopPost=-/bin/rm {{ uuid_file }}
+
+RestartSec=5
+Restart=on-failure
