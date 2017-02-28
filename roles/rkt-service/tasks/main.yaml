@@ -1,13 +1,13 @@
 ---
-- name: "{{ name }} systemd service file"
+- name: "{{ unit_name }} systemd service file"
   template:
     src: systemd.service.j2
-    dest: /etc/systemd/system/{{ name }}.service
-  notify: restart {{ name }}
+    dest: /etc/systemd/system/{{ unit_name }}.service
+  notify: restart {{ unit_name }}
 
-- name: "{{ name }} systemd service"
+- name: "{{ unit_name }} systemd service"
   systemd:
-    name: "{{ name }}"
+    name: "{{ unit_name }}"
     state: started
     enabled: yes
     daemon_reload: yes

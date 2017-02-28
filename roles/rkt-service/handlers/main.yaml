@@ -1,5 +1,5 @@
 ---
-- name: restart {{ name }}
+- name: restart {{ unit_name }}
   systemd:
-    name: "{{ name }}"
+    name: "{{ unit_name }}"
     state: restarted
