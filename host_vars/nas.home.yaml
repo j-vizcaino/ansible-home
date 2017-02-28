@@ -88,7 +88,7 @@ services:
     description: Deluge Bittorrent client
     rkt:
       image:
-        name: docker://linuxserver/sonarr
+        name: docker://linuxserver/deluge
         tag: latest
 
       options:
