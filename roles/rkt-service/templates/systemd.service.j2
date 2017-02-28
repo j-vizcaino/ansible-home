@@ -19,6 +19,7 @@ ExecStart=/usr/bin/rkt run \
   {% endfor -%}
   {{ rkt.image.name }}:{{ rkt.image.tag }}
 
+ExecStop=/usr/bin/rkt stop --uuid-file={{ uuid_file }}
 ExecStopPost=-/usr/bin/rkt rm --uuid-file={{ uuid_file }}
 ExecStopPost=-/bin/rm {{ uuid_file }}
 
