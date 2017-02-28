@@ -2,9 +2,12 @@
 nas:
   uid: 33
   gid: 33
+
 app_basedir: /data/app
 downloads_dir: /data/downloads
 tv_shows_dir: /data/public/Videos/Series
+influxdb_dir: /var/lib/influxdb
+grafana_dir: /var/lib/grafana
 
 services:
   couchpotato:
@@ -101,3 +104,36 @@ services:
       - name: downloads
         source: "{{ downloads_dir }}"
         target: /downloads
+
+  influxdb:
+    description: InfluxDB timeseries database
+    rkt:
+      image:
+        name: docker://influxdb
+        tag: 1.2.0-alpine
+
+      options:
+      - --net=host
+      - --dns=host
+
+      volumes:
+      - name: data
+        source: "{{ influxdb_dir }}"
+        target: /var/lib/influxdb
+
+  grafana:
+    description: Grafana
+    rkt:
+      image:
+        name: docker://grafana/grafana
+        tag: 4.1.1
+
+      options:
+      - --net=host
+      - --dns=host
+      - --set-env GF_AUTH_ANONYMOUS_ENABLED=true
+
+      volumes:
+      - name: data
+        source: "{{ grafana_dir }}"
+        target: /var/lib/grafana

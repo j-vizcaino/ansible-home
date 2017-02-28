@@ -25,3 +25,15 @@
       unit_name: deluge
       description: "{{ services.deluge.description }}"
       rkt: "{{ services.deluge.rkt }}"
+
+  - role: rkt-service
+    vars:
+      unit_name: influxdb
+      description: "{{ services.influxdb.description }}"
+      rkt: "{{ services.influxdb.rkt }}"
+
+  - role: rkt-service
+    vars:
+      unit_name: grafana
+      description: "{{ services.grafana.description }}"
+      rkt: "{{ services.grafana.rkt }}"
