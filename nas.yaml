@@ -4,7 +4,24 @@
   roles:
   - role: rkt-service
     vars:
-      name: couchpotato
+      unit_name: couchpotato
       description: "{{ services.couchpotato.description }}"
       rkt: "{{ services.couchpotato.rkt }}"
 
+  - role: rkt-service
+    vars:
+      unit_name: nzbget
+      description: "{{ services.nzbget.description }}"
+      rkt: "{{ services.nzbget.rkt }}"
+
+  - role: rkt-service
+    vars:
+      unit_name: sonarr
+      description: "{{ services.sonarr.description }}"
+      rkt: "{{ services.sonarr.rkt }}"
+
+  - role: rkt-service
+    vars:
+      unit_name: deluge
+      description: "{{ services.deluge.description }}"
+      rkt: "{{ services.deluge.rkt }}"

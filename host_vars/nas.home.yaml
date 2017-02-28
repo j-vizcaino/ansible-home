@@ -4,6 +4,7 @@ nas:
   gid: 33
 app_basedir: /data/app
 downloads_dir: /data/downloads
+tv_shows_dir: /data/public/Videos/Series
 
 services:
   couchpotato:
@@ -19,7 +20,7 @@ services:
       - --set-env PUID={{ nas.uid }}
       - --set-env PGID={{ nas.gid }}
       - --set-env TZ=Europe/Paris
-      
+
       volumes:
       - name: config
         source: "{{ app_basedir }}/couchpotato"
@@ -30,3 +31,73 @@ services:
       - name: movies
         source: /data/storage/public/Videos/Movies
         target: /movies
+
+  nzbget:
+    description: NZBget - Usenet Grabber
+    rkt:
+      image:
+        name: docker://linuxserver/nzbget
+        tag: latest
+
+      options:
+      - --net=host
+      - --dns=host
+      - --set-env PUID={{ nas.uid }}
+      - --set-env PGID={{ nas.gid }}
+      - --set-env TZ=Europe/Paris
+
+      volumes:
+      - name: config
+        source: "{{ app_basedir }}/nzbget"
+        target: /config
+      - name: downloads
+        source: "{{ downloads_dir }}"
+        target: /downloads
+
+  sonarr:
+    description: Sonarr - TV Shows
+    rkt:
+      image:
+        name: docker://linuxserver/sonarr
+        tag: latest
+
+      options:
+      - --net=host
+      - --dns=host
+      - --set-env PUID={{ nas.uid }}
+      - --set-env PGID={{ nas.gid }}
+
+      volumes:
+      - name: rtc
+        source: /dev/rtc
+        target: /dev/rtc
+      - name: config
+        source: "{{ app_basedir }}/sonarr"
+        target: /config
+      - name: downloads
+        source: "{{ downloads_dir }}"
+        target: /downloads
+      - name: tv
+        source: "{{ tv_shows_dir }}"
+        target: /tv
+
+  deluge:
+    description: Deluge Bittorrent client
+    rkt:
+      image:
+        name: docker://linuxserver/sonarr
+        tag: latest
+
+      options:
+      - --net=host
+      - --dns=host
+      - --set-env PUID={{ nas.uid }}
+      - --set-env PGID={{ nas.gid }}
+
+      volumes:
+      - name: config
+        source: "{{ app_basedir }}/deluge"
+        target: /config
+      - name: downloads
+        source: "{{ downloads_dir }}"
+        target: /downloads
