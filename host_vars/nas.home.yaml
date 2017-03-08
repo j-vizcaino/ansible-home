@@ -75,12 +75,9 @@ services:
       - name: config
         source: "{{ app_basedir }}/sonarr"
         target: /config
-      - name: downloads
-        source: "{{ downloads_dir }}"
-        target: /downloads
-      - name: tv
-        source: "{{ tv_shows_dir }}"
-        target: /tv
+      - name: media
+        source: "{{ media_dir }}"
+        target: /media
 
   deluge:
     description: Deluge Bittorrent client
