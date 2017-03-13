@@ -9,6 +9,7 @@ Description={{ description }}
 
 [Service]
 ExecStart=/usr/bin/rkt run \
+  --insecure-options=image \
   --uuid-file-save={{ uuid_file }} \
   {% for opt in rkt.options -%}
   {{ opt }} \
