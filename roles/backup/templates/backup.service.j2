@@ -1,0 +1,7 @@
+[Unit]
+Description=Personal files backup
+
+[Service]
+Type=simple
+EnvironmentFile=/root/.duplicity.env
+ExecStart=/usr/bin/duplicity {{ backup_duplicity_options }} --encrypt-sign-key={{ backup_gpg_key_id }} {{ backup_source_dir }} {{ backup_target_url }}

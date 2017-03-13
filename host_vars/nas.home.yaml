@@ -10,6 +10,12 @@ tv_shows_dir: /data/public/Videos/Series
 influxdb_dir: /var/lib/influxdb
 grafana_dir: /var/lib/grafana
 
+backup_calendar: daily
+backup_gpg_key_id: 0823A7402EF11C3D4C305207D4A4B00535E1423A
+backup_source_dir: /data/documents
+backup_target_url: acd+acdcli:/backups
+backup_duplicity_options: --full-if-older-than 14D --no-compression --verbosity info
+
 services:
   couchpotato:
     description: CouchPotato
