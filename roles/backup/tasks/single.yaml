@@ -1,0 +1,17 @@
+---
+- name: Deploy {{ unit_name }} service file
+  template:
+    src: "{{ unit_name }}.service.j2"
+    dest: /etc/systemd/system/{{ unit_name }}.service
+
+- name: Deploy {{ unit_name }} periodic task
+  template:
+    src: backup.timer.j2
+    dest: /etc/systemd/system/{{ unit_name }}.timer
+
+- name: Install {{ unit_name }} periodic task
+  systemd:
+    unit: "{{ unit_name }}.timer"
+    enabled: true
+    daemon_reload: true
+    state: started

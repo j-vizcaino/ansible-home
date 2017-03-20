@@ -11,10 +11,25 @@ influxdb_dir: /var/lib/influxdb
 grafana_dir: /var/lib/grafana
 
 backup_calendar: daily
-backup_gpg_key_id: 0823A7402EF11C3D4C305207D4A4B00535E1423A
-backup_source_dir: /data/documents
-backup_target_url: acd+acdcli:/backups
-backup_duplicity_options: --full-if-older-than 14D --no-compression --verbosity info
+backup_docs:
+  gpg_key_id: 0823A7402EF11C3D4C305207D4A4B00535E1423A
+  source_dir: /data/documents
+  target_url: acd+acdcli:/backups
+  options:
+  - --name documents
+  - --full-if-older-than 14D
+  - --no-compression
+  - --verbosity info
+  - --volsize 512
+
+backup_media:
+  options:
+  - --config /data/.rclone.conf
+  - --exclude downloads/
+  - --stats 0
+  - --verbose
+  source_dir: /data/.media/local
+  target_url: acd-encrypted:/
 
 services:
   couchpotato:

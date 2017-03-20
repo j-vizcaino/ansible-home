@@ -1,0 +1,9 @@
+[Unit]
+Description=Media files backup
+StartLimitIntervalSec=60
+StartLimitBurst=1
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/rclone copy {{ backup_media.source_dir }} {{ backup_media.target_url }} {{ backup_media.options | join(' ') }}
+Restart=on-failure
