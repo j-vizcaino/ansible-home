@@ -17,6 +17,7 @@ backup_docs:
   target_url: acd+acdcli:/backups
   options:
   - --name documents
+  - --archive-dir /var/cache/duplicity/documents
   - --full-if-older-than 14D
   - --no-compression
   - --verbosity info
