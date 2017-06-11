@@ -12,16 +12,13 @@ grafana_dir: /var/lib/grafana
 
 backup_calendar: daily
 backup_docs:
-  gpg_key_id: 0823A7402EF11C3D4C305207D4A4B00535E1423A
   source_dir: /data/documents
-  target_url: acd+acdcli:/backups
-  options:
-  - --name documents
-  - --archive-dir /var/cache/duplicity/documents
-  - --full-if-older-than 14D
-  - --no-compression
-  - --verbosity info
-  - --volsize 512
+  repository: /data/backup
+  envfile: /etc/borg.env
+  create_options: []
+  prune_options:
+  - --keep-daily=7
+  - --keep-weekly=4
 
 backup_media:
   options:

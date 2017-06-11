@@ -4,4 +4,3 @@
     unit_name: backup-{{ item }}
   with_items:
   - docs
-  - media

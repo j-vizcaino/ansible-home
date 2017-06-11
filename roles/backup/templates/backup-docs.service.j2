@@ -1,10 +1,12 @@
 [Unit]
 Description=Personal files backup
-StartLimitIntervalSec=60
-StartLimitBurst=1
 
 [Service]
-Type=simple
-EnvironmentFile=/root/.duplicity.env
-ExecStart=/usr/bin/duplicity {{ backup_docs.options | join(' ') }} --encrypt-sign-key={{ backup_docs.gpg_key_id }} {{ backup_docs.source_dir }} {{ backup_docs.target_url }}
-Restart=on-failure
+Type=oneshot
+EnvironmentFile={{ backup_docs.envfile }}
+ExecStart=/usr/local/bin/borg create \
+  -v --stats {{ backup_docs.create_options | join(' ') }} \
+  {{ backup_docs.repository }}::'docs-{now:%Y-%m-%d}' \
+  {{ backup_docs.source_dir }}
+ExecStart=/usr/local/bin/borg prune -v --list {{ backup_docs.repository }} --prefix 'docs-' \
+  {{ backup_docs.prune_options | join(' ') }}
