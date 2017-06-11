@@ -18,6 +18,13 @@ backup_docs:
   prune_options:
   - --keep-daily=7
   - --keep-weekly=4
+  rclone:
+    config: /data/.rclone-backup.conf
+    target: b2:vizcaino-bour-backup
+    options:
+    - -v
+    - --transfers 8
+
 
 backup_media:
   options:

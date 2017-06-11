@@ -10,3 +10,4 @@ ExecStart=/usr/local/bin/borg create \
   {{ backup_docs.source_dir }}
 ExecStart=/usr/local/bin/borg prune -v --list {{ backup_docs.repository }} --prefix 'docs-' \
   {{ backup_docs.prune_options | join(' ') }}
+ExecStart=/usr/local/bin/rclone sync --config {{ backup_docs.rclone.config }} {{ backup_docs.rclone.options | join(' ') }} {{ backup_docs.repository }} {{ backup_docs.rclone.target }}
