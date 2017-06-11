@@ -6,7 +6,7 @@ Type=oneshot
 EnvironmentFile={{ backup_docs.envfile }}
 ExecStart=/usr/local/bin/borg create \
   -v --stats {{ backup_docs.create_options | join(' ') }} \
-  {{ backup_docs.repository }}::'docs-{now:%Y-%m-%d}' \
+  {{ backup_docs.repository }}::'docs-{now:%%Y-%%m-%%d}' \
   {{ backup_docs.source_dir }}
 ExecStart=/usr/local/bin/borg prune -v --list {{ backup_docs.repository }} --prefix 'docs-' \
   {{ backup_docs.prune_options | join(' ') }}
