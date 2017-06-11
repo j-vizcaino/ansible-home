@@ -6,7 +6,6 @@ nas:
 app_basedir: /data/app
 media_dir: /data/media
 downloads_dir: "{{ media_dir }}/downloads"
-tv_shows_dir: /data/public/Videos/Series
 influxdb_dir: /var/lib/influxdb
 grafana_dir: /var/lib/grafana
 
