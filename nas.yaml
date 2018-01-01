@@ -22,6 +22,12 @@
 
   - role: rkt-service
     vars:
+      unit_name: radarr
+      description: "{{ services.radarr.description }}"
+      rkt: "{{ services.radarr.rkt }}"
+
+  - role: rkt-service
+    vars:
       unit_name: deluge
       description: "{{ services.deluge.description }}"
       rkt: "{{ services.deluge.rkt }}"

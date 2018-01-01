@@ -104,6 +104,30 @@ services:
         source: "{{ media_dir }}"
         target: /media
 
+  radarr:
+    description: radarr - TV Shows
+    rkt:
+      image:
+        name: docker://linuxserver/radarr
+        tag: latest
+
+      options:
+      - --net=host
+      - --dns=host
+      - --set-env PUID={{ nas.uid }}
+      - --set-env PGID={{ nas.gid }}
+
+      volumes:
+      - name: rtc
+        source: /dev/rtc
+        target: /dev/rtc
+      - name: config
+        source: "{{ app_basedir }}/radarr"
+        target: /config
+      - name: media
+        source: "{{ media_dir }}"
+        target: /media
+
   deluge:
     description: Deluge Bittorrent client
     rkt:
